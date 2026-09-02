@@ -245,6 +245,14 @@ document.addEventListener('keydown', (e) => {
 
 go(0);
 requestAnimationFrame(() => { fitEmbedFrame(); autofitText(); });
+
+// 폰트 로딩이 늦게 끝나면 텍스트 실측 크기가 달라져 잘림이 재발할 수 있어
+// 폰트 로딩 완료 시점과 window load 시점에 한 번씩 다시 계산한다.
+if (document.fonts && document.fonts.ready) {
+  document.fonts.ready.then(() => { fitEmbedFrame(); autofitText(); });
+}
+window.addEventListener('load', () => { fitEmbedFrame(); autofitText(); });
+setTimeout(() => { fitEmbedFrame(); autofitText(); }, 500);
 </script>
 </body>
 </html>
