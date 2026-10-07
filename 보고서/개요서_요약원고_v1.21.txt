@@ -1,0 +1,193 @@
+# 발자국 프로젝트 개요서 요약 원고 v1.21 (2026.10.07, 원고 v6.3 축약, 한글 2018 화면 기준 본문 10쪽)
+# 기호는 원고 v6.3과 같음. 문장은 원고 v6.3에서 가져오고, 축약·수정한 문장만 새로 다듬음
+# 빠진 소제목: 서비스 기본 정보, 사용자별 제공 가치, 참여 불균형 대응의 한계, 기획 방향, 문제별 대응 정리,
+#              현행 방식과 협업 도구, 연구 사례, 기능별 동작, 데이터 구조. 차례도 뺌
+# 빠진 그림: 사용 흐름, 현행·제안 비교, 실태 조사, 근거 패널 과정, 엔티티 관계도
+# 그림 1-1(동료평가 화면 예시)은 새로 만든 image_eval.png(도구: mock/eval.html), 1-1 사용 흐름 안에 둠
+
+COVER 프로젝트 개요서 요약
+
+TITLE 프로젝트 개요서 요약
+SUB 프로젝트명: 발자국 — 조별과제 과정기록 & 평가지원 서비스
+
+BOX 서 비 스: 발자국(조별과제 과정기록·평가지원 웹 서비스)
+BOX 원    칙: 판단은 사람, 시스템은 근거만
+BOX 사 용 자: 교수, 조장, 조원(PC 웹)
+BOX 기    능: 9개(핵심 8, 부가 1)
+BOX 목    표: 2026.12.11 최소 흐름 1개 시연, 2027.03 최종 완성
+BOX 차 별 점: 산출물·완료확인 기록과 동료평가의 한 화면 연결
+
+S 1-1. 서비스 개요
+
+H □ 서비스 정의
+O 발자국은 조별과제 진행 중 조원이 올린 산출물과 조원끼리 서로 확인한 기여를 과정 기록으로 남기는 웹 서비스임
+O 과제가 끝나면 조원은 이 기록을 참고하며 동료평가를 입력하고, 시스템은 누가 어떤 일을 언제 했는지 보여 줌
+
+H □ 사용 흐름
+O 교수가 과제를 만들고 조마다 조장을 지정하면, 조장은 초대 링크로 다른 조원을 모아 자료조사·문서화 같은 역할을 맡김
+O 조원은 맡은 역할의 결과 파일인 산출물을 올리며, 회의 진행·자료 취합·일정 조율처럼 파일로 남지 않는 기여는 조장이 기여 항목으로 등록해 담당자를 지정함
+O 담당자가 산출물이나 기여 항목의 완료를 보고하면 본인이 아닌 다른 조원이 그 사실을 확인하며, 이 절차를 완료확인이라 함
+O 과제가 끝나면 조원은 평가 화면 옆 근거 패널에서 평가 대상 조원의 산출물과 기여 항목 기록을 보고 6개 항목을 각각 5점 척도로 평가하며, 화면은 [그림 1-1]과 같음
+O 교수는 조별 기록과 평가 결과를 열람하며, 평가 결과를 성적에 어떻게 반영할지는 교수가 정함
+FIG image_eval.png|[그림 1-1] 동료평가 화면 시안(역할 수행 항목을 펼친 상태, 수치는 예시)|150
+
+H □ 운영 원칙
+O 점수는 사람이 입력하며, 시스템은 점수 자동 계산, 순위, 가중치를 제공하지 않음
+O 업로드, 등록, 보고, 확인 시각은 서버가 자동으로 기록하며, 사용자가 수정할 수 없음
+
+S 1-2. 기획 배경
+
+H □ 조별과제 활용 실태
+O 수도권 4년제 대학생 225명 조사에서 60%가 한 학기에 조별과제를 3개 이상 수행함
+O 같은 조사에서 89%는 참여가 저조한 조원, 이른바 무임승차자를 경험했고 80%는 조별과제를 선호하지 않는다고 답함
+SRC 「대학생 팀플 실태 조사」(보도자료 2012-08호), 대학내일20대연구소, 2012, https://www.20slab.org/Archives/1902
+O 이 조사는 2012년 자료이나, 같은 연구소의 2018년 조사에서도 대학생은 한 학기 평균 3.34개의 조별 모임에 참여함
+SRC 「대학 내 모임 참여 행태 및 인식 보고서」, 대학내일20대연구소, 2018, https://www.20slab.org/Archives/28766
+
+H □ 동료평가 시점의 기록 부족
+O 동료평가는 과제가 끝난 뒤 주로 구글 폼으로 한 번 입력하는 방식으로 이루어짐
+O 진행 기록은 노션, 구글 드라이브, 카카오톡에 흩어져 있고 평가 도구와도 연결되지 않아, 평가가 기억과 인상에 의존함
+
+H □ 팀 내부 사전 조사
+O 본 팀 조원 6명에게 조별과제 평가 경험을 물은 결과, 3명은 파일로 남지 않는 기여가 평가에 잘 반영되지 않는 점을, 1명은 친분이나 발언권에 따라 평가가 달라지는 점을 문제로 꼽음
+O 응답자가 6명뿐인 조사이므로, 기획 방향의 참고 자료로만 씀
+
+S 1-3. 기획 타당성
+
+H □ 평가 시점의 근거 부족
+O 현재의 동료평가는 과제가 끝난 뒤 한 번 입력되고 진행 기록과 연결되지 않아, 평가 시점에 함께 볼 근거가 없음
+O 발자국은 과제 기간 동안 산출물과 완료확인을 서버 시각과 함께 기록하고, 이 기록을 평가 화면 옆 근거 패널에 보여 줌
+
+H □ 파일 없는 기여의 기록 누락
+O 회의 진행·자료 취합·일정 조율은 조별과제에 꼭 필요한 일이지만 결과 파일이 남지 않아 따로 기록되기 어려움
+O 발자국에서는 조장이 이런 일을 기여 항목으로 등록해 담당자를 지정하고, 담당자가 완료를 보고하면 다른 조원이 확인함
+
+H □ 친분·발언권에 따른 평가 왜곡
+O 인도네시아 대학생을 대상으로 한 연구에서 학생들은 관계를 유지하기 위해 가까운 조원을 관대하게 평가하고, 기여가 적은 조원과의 직접적인 갈등은 피하는 경향을 보임
+SRC 「Understanding Rater Bias in Self and Peer Assessment among University Students: A Cultural Psychology Perspective」, Tandiono & Limijaya, The Asia-Pacific Education Researcher, 2025, https://doi.org/10.1007/s40299-024-00967-7
+O 발자국은 평가자가 각자 입력한 평가를 교수만 열람하게 하여, 평가 내용이 상대에게 알려질 것을 의식한 점수 조정을 줄이는 것을 목표로 함
+O 또한 발자국은 행동 기준이 문장으로 제시된 평가 척도와 근거 패널의 기록을 평가자에게 함께 보여 주어, 인상에 따른 관대한 평가를 줄이는 것을 목표로 함
+
+H □ 활동량과 기여도의 차이
+O 대학 수업의 Moodle(학습 관리 시스템) 활동 로그 8,781건과 동료평가를 함께 분석한 연구에서, 온라인 활동량과 동료평가 기여 점수는 중간 수준의 관련만 보임
+D - 순위 상관계수는 0.44였고, 활동량으로 기여 점수를 설명하는 선형 회귀 모형의 설명력은 12.5%에 그침
+SRC 「Assessing Individual Contributions of Team Members to Team Achievement by Combining Peer Assessments and Digital Presence in an Academic Environment」, Katsenos & Pierrakeas, Education Sciences 15(3), 2025, https://doi.org/10.3390/educsci15030279
+O 활동량과 기여는 관련이 있지만 같은 것은 아니므로, 업로드·접속 횟수를 그대로 점수로 바꾸면 파일을 자주 올리는 사람이 유리해지고 파일로 남지 않는 기여는 덜 반영됨
+O 발자국은 업로드 횟수를 점수로 바꾸지 않으며, 근거 패널은 기록을 종류별로 나열하고 건수는 나열한 기록의 수로만 표시함
+O 진척 시각화 화면과 평가 화면에는 업로드 횟수가 기여도를 뜻하지 않는다는 안내 문구를 고정해 표시함
+
+H □ 예상 위험과 대응
+O 과정을 기록하는 방식에서는 조장이나 담당자가 평가 직전에 지난 기여를 한꺼번에 등록하거나 보고하는 일이 생길 수 있음
+O 발자국에서는 서버가 시각을 남기므로 늦게 남긴 기록은 그 시각으로 드러나며, 완료확인은 다른 조원만 할 수 있어 담당자 혼자서는 지난 기여를 확인된 기록으로 만들 수 없음
+O 조원끼리 실제 완료 여부와 관계없이 서로 완료확인을 해 주는 경우는 막을 수 없으므로, 발자국은 확인 이력을 남겨 확인이 몰리거나 특정 조원끼리만 오간 경우를 교수가 볼 수 있게 함
+
+S 1-4. 유사 서비스
+
+H □ 비교 대상
+O 비교 대상은 현재 수업의 동료평가 방식, 협업 도구, 국내 대학 LMS(학습 관리 시스템)의 팀 기능, 해외 동료평가 도구 네 가지이며, 협업 도구는 노션, 구글 드라이브, 카카오톡의 조합임
+O 국내 LMS와 해외 도구는 공식 문서와 도입 대학의 안내 자료를 2026.10.01에 확인한 범위에서 비교함
+
+H □ 국내 LMS 팀 기능
+O 유비온의 코스모스(Coursemos)는 국내 여러 대학이 쓰는 LMS로, 팀 구성, 팀 게시판, 팀 과제 제출, 팀원 간 상호 평가를 제공함
+SRC 「팀 학습」 사용자 매뉴얼, 성신여자대학교 LMS, https://slms.sungshin.ac.kr/local/ubmanual/pdf/ko/5.TeamLearning.pdf
+
+H □ 해외 동료평가 도구
+O 해외 도구로는 CATME, Buddycheck, TEAMMATES, FeedbackFruits Group Member Evaluation, Moodle Group Peer Evaluation 5종을 살펴봄
+O 5종은 입력받은 점수나 기여도를 조정·정규화하거나 채점하는 데 중점을 두며, 도구별 산출 방식은 [표 1-1]에 정리함
+SRC 「CATME Peer Evaluation」, CATME Smarter Teamwork, https://info.catme.org/features/peer-evaluation/
+SRC 「Buddycheck: Overview」, University of Manchester, https://www.teachingcollege.fse.manchester.ac.uk/buddycheck-overview/
+SRC 「TEAMMATES Instructor Help: Team Contribution Questions」, National University of Singapore, https://teammatesv4.appspot.com/web/front/help/instructor
+SRC 「Group Member Evaluation: Overview」, FeedbackFruits, https://help.feedbackfruits.com/hc/en-us/articles/23527085024658-Group-Member-Evaluation-Overview
+SRC 「Overview of Group Peer Review」, University of Bath, https://teachinghub.bath.ac.uk/?p=5851060
+TABLE [표 1-1] 유사 서비스 비교
+서비스 | 과정 기록 | 파일 없는 기여 기록 | 평가 화면 근거 표시 | 점수 산출
+서면·구글 폼 | × | × | × | 산출 없음
+협업 도구 조합 | △ | △ | × | 해당 없음
+코스모스 팀 학습 | △ | △ | × | 상호 평가 점수 수집
+CATME | × | × | × | 성적 조정값 계산
+Buddycheck | × | × | × | 조정 계수 계산
+TEAMMATES | × | × | × | 기여도 정규화
+FeedbackFruits Group Member Evaluation | × | × | × | 자동 채점
+Moodle Group Peer Evaluation | × | × | × | 조 점수 비율 반영
+발자국 | ○ | ○ | ○ | 산출 없음
+END
+N ※ ○ 제공, △ 부분 제공, × 미제공이며, 국내 LMS와 해외 도구는 2026.10.01에 확인한 공식 문서와 도입 대학 안내 자료 기준임
+N ※ 협업 도구 조합과 코스모스 팀 학습의 △는 기록이 도구별로 흩어지거나 대화·게시판 글로만 남는 경우임
+N ※ CATME는 회의록 양식만 제공하고, Moodle Group Peer Evaluation은 조별 최종 제출 파일만 받아 ×로 표시함
+SRC 「Team Meeting Tools」, CATME Smarter Teamwork, https://info.catme.org/instructor/teacher-materials/team-meeting-tools/
+SRC 「Peerwork Activity」, MoodleDocs, https://docs.moodle.org/en/Peerwork_Activity
+
+H □ 차별점
+O 발자국은 평가 화면 옆에 평가 대상 조원의 산출물·완료확인 기록을 보여 주어 기록과 동료평가를 한 화면에서 연결하며, 점수 판단은 사람에게 맡김
+O 조사한 범위에서는 이러한 조합을 제공하는 서비스를 찾지 못함
+
+S 1-5. 주요 서비스
+
+H □ 기능 구성
+O 주요 기능은 모두 9개이며, 이 중 8개는 서비스의 기본 흐름을 이루는 핵심 기능이고 진척 시각화 1개는 핵심 기능을 완성한 뒤 구현할 부가 기능임
+TABLE [표 1-2] 주요 기능 목록
+번호 | 기능 | 사용자 | 내용 | 구분
+1 | 과제 생성 | 교수 | 과제명·기간 등록, 조 개수만큼 조장 지정 | 핵심
+2 | 역할 배정 | 조장 | 초대 링크로 조원 합류, 역할명 배정 | 핵심
+3 | 산출물 업로드·열람 | 조장·조원·교수 | 파일 업로드, 버전순 누적, 열람·다운로드 | 핵심
+4 | 기여 항목 등록 | 조장 | 파일 없는 기여 등록, 담당자 지정 | 핵심
+5 | 완료확인 | 조장·조원 | 담당자 보고 후 다른 조원 확인 | 핵심
+6 | 근거 패널 | 조장·조원·교수 | 산출물·기여 항목의 종류별 표시, 평가 화면 옆 배치 | 핵심
+7 | 동료평가 | 조장·조원 | 행동기준평정척도 6개 항목, 각 5점, 선택 의견 | 핵심
+8 | 교수 열람 | 교수 | 조별 근거 기록, 완료확인 이력, 평가 결과 열람 | 핵심
+9 | 진척 시각화 | 조장·조원 | 역할별 산출물 업로드 시점 타임라인 | 부가
+END
+
+H □ 동료평가
+O 과제가 끝나면 평가자는 평가 대상 조원마다 6개 항목을 각각 5점 척도로 입력하며, 항목은 국내 대학생 조별과제를 대상으로 개발·타당화된 동료평가 행동기준평정척도를 따름
+SRC 「조별 과제 동료평가 행동기준평정척도 개발 및 타당화 연구」, 신태섭, 공학교육연구 21(5), 2018, https://doi.org/10.18108/jeer.2018.21.5.32
+O 항목마다 5점·3점·1점에 해당하는 행동이 문장으로 제시되고 4점과 2점은 그 중간 수준이며, 평가자는 인상이 아니라 제시된 행동이 있었는지를 기준으로 점수를 고름
+TABLE [표 1-3] 동료평가 항목과 점수 기준
+항목 | 5점 | 3점 | 1점
+목표 공유·협업 | 같은 목표 공유, 원활한 협업 | 목표 공유, 협업 부족 | 협업 없는 단독 진행
+역할 수행 | 책임감 있는 수행, 과제에 큰 도움 | 최소한의 노력, 도움 적음 | 역할 미수행, 과제에 피해
+격려·도움 | 적극적인 격려와 도움 | 격려·도움 없음, 피해 없음 | 조원의 사기 저하, 피해
+온라인 소통 | 적극적인 온라인 소통 | 소극적인 온라인 소통 | 온라인 소통 불참·불성실
+대면 소통 | 대면 회의에서 적극적 소통 | 대면 회의에서 소극적 소통 | 대면 회의 불참·불성실
+진행 점검·보충 | 지속적 관심, 부족한 부분 보충 | 관심은 있으나 보충 없음 | 진행에 무관심
+END
+N ※ 원 척도(출처 논문의 표 3)의 행동 문장을 줄여 적음
+N ※ 원 척도 범주는 차례로 사회적 상호의존성, 개인책무성, 대인관계능력, 촉진적 상호작용(온라인·면대면), 집단 처리과정임
+O 평가자는 파일로 남지 않는 기여를 근거 패널의 기여 항목 기록으로 확인하며, 온라인 소통, 대면 소통, 진행 점검·보충 항목을 평가할 때 이 기록을 참고함
+O 선택 의견은 평가자가 필요한 경우에만 남김
+
+H □ 구현 단계
+O 구현에서 기술적으로 중요한 부분은 조 단위 권한 관리로, 같은 과제 안에서도 다른 조의 기록을 볼 수 없도록 서버가 요청마다 사용자의 소속 조와 권한을 검사해야 함
+O 학과 교육과정에서 다루는 React와 Spring Boot로 화면과 서버를 구성하고, 외부 서비스 의존은 파일 저장소와 메일 발송 두 가지로 한정하며, 전체 구성은 [표 1-4]와 같음
+TABLE [표 1-4] 구현 기술 구성
+구분 | 내용
+화면 | React
+서버 | Spring Boot 3, Spring Security, JWT(JSON 웹 토큰) 인증
+데이터베이스 | PostgreSQL, JPA(객체와 테이블 연결)
+파일 저장 | 오브젝트 스토리지(MinIO, 산출물 파일 본문 저장)
+메일 발송 | SMTP(메일 전송 규약, 초대·알림 메일)
+실행 환경 | Docker(컨테이너 실행 도구)
+END
+O 구현은 인증·과제·역할, 산출물 업로드·열람, 동료평가 입력, 기여 항목·완료확인, 근거 패널·교수 열람·조 단위 권한, 진척 시각화 순서로 진행함
+O 2026.12.11 학기 발표는 기한을 고려해 과제 생성, 역할 배정, 산출물 업로드, 동료평가 입력의 최소 흐름 1개로 한정하고, 근거 패널은 화면 시안으로 함께 제시함
+TABLE [표 1-5] 단계별 목표
+구분 | 내용
+2026.12.11 학기 발표 | 최소 흐름 1개 시연, 근거 패널 화면 시안 제시
+2026.12.12 ~ 2027.02 | 기여 항목, 완료확인, 근거 패널, 교수 열람, 조 단위 권한 구현
+2027.03 최종 | 진척 시각화 구현, 핵심 기능 8개와 부가 기능 1개 완성
+END
+
+S 참고 자료
+REF 대학내일20대연구소(2012). 대학생 팀플 실태 조사(보도자료 2012-08호, 수도권 4년제 대학생 225명, 2012.05.31 ~ 2012.06.18 조사). https://www.20slab.org/Archives/1902
+REF 대학내일20대연구소(2018). 대학 내 모임 참여 행태 및 인식 보고서(대학생 500명). https://www.20slab.org/Archives/28766
+REF Tandiono, R., & Limijaya, A. (2025). Understanding Rater Bias in Self and Peer Assessment among University Students: A Cultural Psychology Perspective. The Asia-Pacific Education Researcher. https://doi.org/10.1007/s40299-024-00967-7
+REF Katsenos, I., & Pierrakeas, C. (2025). Assessing Individual Contributions of Team Members to Team Achievement by Combining Peer Assessments and Digital Presence in an Academic Environment. Education Sciences, 15(3), 279. https://doi.org/10.3390/educsci15030279
+REF 신태섭(2018). 조별 과제 동료평가 행동기준평정척도 개발 및 타당화 연구. 공학교육연구, 21(5), 32-39. https://doi.org/10.18108/jeer.2018.21.5.32
+REF 성신여자대학교 LMS. 팀 학습 사용자 매뉴얼(코스모스). https://slms.sungshin.ac.kr/local/ubmanual/pdf/ko/5.TeamLearning.pdf
+REF CATME Smarter Teamwork. CATME Peer Evaluation. https://info.catme.org/features/peer-evaluation/
+REF CATME Smarter Teamwork. Team Meeting Tools. https://info.catme.org/instructor/teacher-materials/team-meeting-tools/
+REF University of Manchester. Buddycheck: Overview. https://www.teachingcollege.fse.manchester.ac.uk/buddycheck-overview/
+REF National University of Singapore. TEAMMATES Instructor Help: Team Contribution Questions. https://teammatesv4.appspot.com/web/front/help/instructor
+REF FeedbackFruits. Group Member Evaluation: Overview. https://help.feedbackfruits.com/hc/en-us/articles/23527085024658-Group-Member-Evaluation-Overview
+REF University of Bath. Overview of Group Peer Review. https://teachinghub.bath.ac.uk/?p=5851060
+REF MoodleDocs. Peerwork Activity. https://docs.moodle.org/en/Peerwork_Activity
