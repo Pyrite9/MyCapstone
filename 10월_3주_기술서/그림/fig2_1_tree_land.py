@@ -28,6 +28,7 @@ LEAF_PITCH, LEAF_PAD = 4.2, 1.6
 GROUP_GAP, TOP_GAP = 2.8, 3.5
 R = 1.3                            # 모서리
 INK, SUB = '#1F2328', '#5B6470'
+SHOW_STAGE = False                 # 10.22 관리자: 구현 단계 배지·범례 표시 안 함
 
 # 영역 색(진한 색: 영역 머리·선·카드 테두리 / 연한 색: 카드 머리)
 PALETTE = {
@@ -55,13 +56,13 @@ def esc(s):
 
 
 def read_table1(path):
-    """작업 원고 [표 1]: 기능 이름 → (기능 ID, 구현 단계)"""
+    """작업 원고 [표 1]: 기능 이름 → 기능 ID"""
     lines = open(path, encoding='utf8').read().splitlines()
     i = next(k for k, l in enumerate(lines) if l.startswith('TABLE [표 1]')) + 2
     out = {}
     while lines[i].strip() != 'END':
         c = [x.strip() for x in lines[i].split(' | ')]
-        out[c[1]] = (c[0], c[4])
+        out[c[1]] = c[0]
         i += 1
     return out
 
@@ -128,7 +129,7 @@ def build(table1):
         for j, f in enumerate(a['kids']):
             if j:
                 y += GROUP_GAP
-            fid, stage = table1[f['name']]
+            fid = table1[f['name']]
             leaves = ['· ' + k['name'] for k in f['kids']]
             body_h = LEAF_PAD * 2 + LEAF_PITCH * len(leaves)
             card_h = HEAD_H + body_h
@@ -139,10 +140,9 @@ def build(table1):
             text(cxl + 2.0, y + 3.3, f['name'], FS, 'Bold', dark, 'start')
             fit(f['name'], FS, 'Bold', cw - 3.5)
             text(cxl + 2.0, y + 7.3, fid, FS_META, 'Medium', SUB, 'start')
-            badge(cxl + cw - 1.6, y + 7.3, stage, dark)
             for k, s in enumerate(leaves):
                 ly_ = y + HEAD_H + LEAF_PAD + LEAF_PITCH * (k + 0.5)
-                late = LEAF_STAGE.get(s[2:])
+                late = LEAF_STAGE.get(s[2:]) if SHOW_STAGE else None
                 text(cxl + 2.2, ly_, s, FS, 'Regular', SUB if late else INK, 'start')
                 if late:
                     badge(cxl + cw - 1.6, ly_, late, dark, w=9.2, h=3.3)
@@ -154,6 +154,9 @@ def build(table1):
         bottoms.append(y)
 
     # 범례: 가장 짧은 두 열이 이어진 자리(동료평가·교수 열람)
+    if not SHOW_STAGE:
+        H = max(bottoms) + 0.4
+        return finish(out, H, worst)
     lx = xs[4]
     lw = COL_W * 2 + GAP_COL
     ly = max(bottoms[4], bottoms[5]) + 7.0
@@ -165,6 +168,10 @@ def build(table1):
         badge(lx + 2.5 + 10.2, cy, st, INK)
         text(lx + 15.5, cy, STAGE_TEXT[st], FS_META + 0.3, 'Regular', INK, 'start')
     H = max(max(bottoms), ly + lh) + 0.4
+    return finish(out, H, worst)
+
+
+def finish(out, H, worst):
     assert worst < 1.0, f'글자가 상자보다 넓음 ({worst:.2f})'
     svg = (f'<svg xmlns="http://www.w3.org/2000/svg" width="{W + 0.8}mm" height="{H:.2f}mm" '
            f'viewBox="-0.4 0 {W + 0.8} {H:.2f}" font-family="Noto Sans CJK KR, sans-serif">'
